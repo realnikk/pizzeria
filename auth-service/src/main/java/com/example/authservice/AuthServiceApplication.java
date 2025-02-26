@@ -1,13 +1,13 @@
-package com.example.eurekaclient2;
+package com.example.authservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EurekaClient2Application {
+public class AuthServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(EurekaClient2Application.class, args);
+        SpringApplication.run(AuthServiceApplication.class, args);
     }
 
 }

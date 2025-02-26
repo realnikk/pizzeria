@@ -10,7 +10,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +28,14 @@ public class ProductService {
                 productAddDto
         );
         productRepository.save(product);
+    }
+
+    public List<ProductAddDto> getAllProducts() {
+        List<Product> productsList = productRepository.findAll();
+        List<ProductAddDto> productsDtoList = new ArrayList<>();
+        return productsList.stream()
+                .map(ProductMapper::convertToDto)
+                .collect(Collectors.toList());
     }
 
     public void setProductImage(MultipartFile file, String name) throws IOException {

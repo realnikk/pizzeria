@@ -11,8 +11,17 @@ public class ProductMapper {
         return Product.builder()
                 .name(productAddDto.getName())
                 .description(productAddDto.getDescription())
-                .price(productAddDto.getPrice())
+                .price(Integer.parseInt(productAddDto.getPrice()))
                 .category(category)
                 .build();
+    }
+
+    public static ProductAddDto convertToDto(Product product) {
+        ProductAddDto productAddDto = new ProductAddDto();
+        productAddDto.setName(product.getName());
+        productAddDto.setDescription(product.getDescription());
+        productAddDto.setPrice(String.valueOf(product.getPrice()));
+        productAddDto.setCategory(product.getCategory().getName());
+        return productAddDto;
     }
 }

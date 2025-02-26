@@ -15,7 +15,7 @@ public class Product {
     private Long id;
     private String name;
     private String description;
-    private Double price;
+    private int price;
     private String imagePath;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
