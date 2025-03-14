@@ -1,27 +1,29 @@
 package com.example.productservice.mapper;
 
-import com.example.productservice.dto.ProductAddDto;
+import com.example.productservice.dto.ProductDto;
 import com.example.productservice.entity.Category;
 import com.example.productservice.entity.Product;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProductMapper {
-    public static Product convertToEntity(Category category, ProductAddDto productAddDto) {
+    public static Product convertToEntity(String name, String description, Category category, Double price, String imagePath) {
         return Product.builder()
-                .name(productAddDto.getName())
-                .description(productAddDto.getDescription())
-                .price(Integer.parseInt(productAddDto.getPrice()))
+                .name(name)
+                .description(description)
+                .price(price)
                 .category(category)
+                .imagePath(imagePath)
                 .build();
     }
 
-    public static ProductAddDto convertToDto(Product product) {
-        ProductAddDto productAddDto = new ProductAddDto();
-        productAddDto.setName(product.getName());
-        productAddDto.setDescription(product.getDescription());
-        productAddDto.setPrice(String.valueOf(product.getPrice()));
-        productAddDto.setCategory(product.getCategory().getName());
-        return productAddDto;
+    public static ProductDto convertToDto(Product product) {
+        return ProductDto.builder()
+                .name(product.getName())
+                .description(product.getDescription())
+                .price(product.getPrice())
+                .category(product.getCategory().getName())
+                .imagePath(product.getImagePath())
+                .build();
     }
 }

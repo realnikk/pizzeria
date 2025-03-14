@@ -1,4 +1,0 @@
-package com.modsen.peskov.userservice.security;
-
-public class WebSecurityConfig {
-}
