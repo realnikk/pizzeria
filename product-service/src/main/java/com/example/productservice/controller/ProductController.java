@@ -1,6 +1,7 @@
 package com.example.productservice.controller;
 
 import com.example.productservice.dto.ProductDto;
+import com.example.productservice.dto.ProductPriceResponse;
 import com.example.productservice.entity.Product;
 import com.example.productservice.exception.CategoryNotFoundException;
 import com.example.productservice.exception.ProductAlreadyExistsException;
@@ -24,11 +25,11 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<?> addProduct(@RequestPart("name") String name,
-                                        @RequestPart("description") String description,
-                                        @RequestPart("category") String category,
-                                        @RequestPart("price") String price,
-                                        @RequestPart("photo") MultipartFile photo){
+    public ResponseEntity<?> addProduct(@RequestParam("name") String name,
+                                        @RequestParam("description") String description,
+                                        @RequestParam("category") String category,
+                                        @RequestParam("price") String price,
+                                        @RequestParam("photo") MultipartFile photo){
         try{
             return ResponseEntity.ok(productService.addProduct(name, description, category, price, photo));
         } catch(ProductAlreadyExistsException e) {
@@ -81,6 +82,15 @@ public class ProductController {
 
         } catch (ProductNotFoundException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/price/{id}")
+    public ProductPriceResponse getProductPrice(@PathVariable String id){
+        try{
+            return productService.getProductPrice(id);
+        } catch(ProductNotFoundException e){
+            return null;
         }
     }
 }

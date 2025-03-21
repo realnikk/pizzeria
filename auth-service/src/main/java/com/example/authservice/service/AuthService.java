@@ -45,7 +45,7 @@ public class AuthService {
     }
 
     public String generateToken(SignInDto signInDto) {
-        UserSecurityDto userSecurityDto = userClient.getUserByEmail(signInDto.getEmail());
+        UserSecurityDto userSecurityDto = userClient.getSecurityUserByEmail(signInDto.getEmail());
         if(userSecurityDto.getEmail().isEmpty()){
             throw new UserNotFoundException();
         }

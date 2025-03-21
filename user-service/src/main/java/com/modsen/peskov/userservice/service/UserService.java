@@ -63,12 +63,16 @@ public class UserService {
     public User updateUserProfile(String email, UserProfileDto userProfileDto){
         if(!userRepository.existsByEmail(email)){
             throw new UserNotFoundException();
-        } else if(userRepository.existsByPhone(userProfileDto.getPhone())){
-            throw new UserPhoneAlreadyExistsException();
-        } else if(userRepository.existsByEmail(userProfileDto.getEmail())){
-            throw new UserEmailAlreadyExistsException();
         } else {
             User user = userRepository.findByEmail(email);
+            if(!email.equals(userProfileDto.getEmail()) &&
+                    userRepository.existsByEmail(userProfileDto.getEmail())){
+                throw new UserEmailAlreadyExistsException();
+            }
+            if(!user.getPhone().equals(userProfileDto.getPhone()) &&
+                    userRepository.existsByPhone(userProfileDto.getPhone())){
+                throw new UserPhoneAlreadyExistsException();
+            }
             user.setName(userProfileDto.getName());
             user.setEmail(userProfileDto.getEmail());
             user.setPhone(userProfileDto.getPhone());

@@ -10,12 +10,6 @@ import java.util.function.Predicate;
 @Component
 public class RouteValidator {
 
-//    public static final List<String> openApiEndpoints = List.of(
-//            "/user",
-//            "/auth",
-//            "/eureka"
-//    );
-
     public static final Map<String, List<HttpMethod>> openApiEndpoints = Map.of(
             "/user", List.of(HttpMethod.POST),
             "/auth", List.of(HttpMethod.POST),
@@ -23,24 +17,14 @@ public class RouteValidator {
             "/product", List.of(HttpMethod.GET)
     );
 
-//    public static final List<String> apiEndpointsForAdmin = List.of(
-//            "/product"
-//    );
-
     public static final Map<String, List<HttpMethod>> adminApiEndpoints = Map.of(
             "/product", List.of(HttpMethod.POST, HttpMethod.PUT, HttpMethod.DELETE),
-            "/category", List.of(HttpMethod.POST, HttpMethod.PUT, HttpMethod.DELETE)
+            "/category", List.of(HttpMethod.POST, HttpMethod.PUT, HttpMethod.DELETE),
+            "/user", List.of(HttpMethod.GET, HttpMethod.DELETE),
+            "/user/admin", List.of(HttpMethod.PUT),
+            "/order", List.of(HttpMethod.PUT, HttpMethod.DELETE)
     );
 
-//    public Predicate<ServerHttpRequest> isSecured =
-//            request -> openApiEndpoints
-//                    .stream()
-//                    .noneMatch(uri -> request.getURI().getPath().startsWith(uri));
-
-//    public Predicate<ServerHttpRequest> isForAdmin =
-//            request -> apiEndpointsForAdmin
-//                    .stream()
-//                    .allMatch(uri -> request.getURI().getPath().contains(uri));
     public Predicate<ServerHttpRequest> isSecured =
         request -> openApiEndpoints.entrySet()
                 .stream()

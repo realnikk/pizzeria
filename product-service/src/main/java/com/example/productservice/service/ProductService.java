@@ -1,6 +1,7 @@
 package com.example.productservice.service;
 
 import com.example.productservice.dto.ProductDto;
+import com.example.productservice.dto.ProductPriceResponse;
 import com.example.productservice.entity.Category;
 import com.example.productservice.entity.Product;
 import com.example.productservice.exception.CategoryAlreadyExistsException;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ProductService {
-    private static final String IMAGE_DIR = "D:/product_images/";
+    private static final String IMAGE_DIR = "D:\\product_images\\";
     private final ProductRepository productRepository;
     private final CategoryService categoryService;
 
@@ -51,6 +52,18 @@ public class ProductService {
                 .map(ProductMapper::convertToDto).toList();
     }
 
+    public Double getProductPrice(UUID id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(ProductNotFoundException::new);
+        return product.getPrice();
+    }
+
+    public ProductPriceResponse getProductPrice(String id) {
+        Product product = productRepository.findById(UUID.fromString(id))
+                .orElseThrow(ProductNotFoundException::new);
+        return ProductPriceResponse.builder().price(product.getPrice()).id(id).build();
+    }
+
     public List<ProductDto> getProductsByCategory(String categoryName) {
         Category category = categoryService.findCategory(categoryName);
         List<Product> products =productRepository.findAllByCategory(category);
@@ -61,7 +74,7 @@ public class ProductService {
     public Product updateProduct(String name, String newName, String description, String categoryName, Double price, MultipartFile photo) throws IOException {
         Product product = productRepository.findByName(name)
                 .orElseThrow(ProductNotFoundException::new);
-        if(productRepository.existsByName(newName)){
+        if(!name.equals(newName) && productRepository.existsByName(newName)){
             throw new ProductAlreadyExistsException();
         }
         product.setName(newName);

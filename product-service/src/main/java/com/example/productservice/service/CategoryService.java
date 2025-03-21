@@ -33,7 +33,7 @@ public class CategoryService {
     public Category updateCategory(String name, CategoryDto categoryDto){
         Category category = categoryRepository.findByName(name)
                 .orElseThrow(CategoryNotFoundException::new);
-        if(categoryRepository.existsByName(categoryDto.getName())){
+        if(!name.equals(categoryDto.getName()) && categoryRepository.existsByName(categoryDto.getName())){
             throw new CategoryAlreadyExistsException();
         }
         category.setName(categoryDto.getName());

@@ -1,5 +1,6 @@
 package com.example.orderservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,9 +17,10 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(updatable = false, nullable = false)
     private UUID id;
-    private int count;
+    private Integer count;
     private UUID productId;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
-    private Order order;
+    @JsonBackReference
+    private Ordeer order;
 }

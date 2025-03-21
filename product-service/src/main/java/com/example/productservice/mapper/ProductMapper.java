@@ -14,6 +14,7 @@ public class ProductMapper {
                 .price(price)
                 .category(category)
                 .imagePath(imagePath)
+                .count(0)
                 .build();
     }
 

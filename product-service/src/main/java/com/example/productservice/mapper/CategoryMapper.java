@@ -2,7 +2,6 @@ package com.example.productservice.mapper;
 
 import com.example.productservice.dto.CategoryDto;
 import com.example.productservice.entity.Category;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
